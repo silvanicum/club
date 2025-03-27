@@ -32,4 +32,19 @@ app.post("/chat", async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+import express from "express";
+
+const app = express();
+const PORT = process.env.PORT || 10000;
+
+// Főoldal ("/") kiszolgálása
+app.get("/", (req, res) => {
+    res.send("🚀 Az OpenAI szerver fut!");
+});
+
+// Indítsd el a szervert
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+
 
