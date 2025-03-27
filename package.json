@@ -1,3 +1,12 @@
-git add package.json
-git commit -m "Add package.json"
-git push origin main
+{
+  "name": "club",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
