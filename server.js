@@ -1,36 +1,40 @@
 import express from "express";
 import cors from "cors";
+import OpenAI from "openai";
+import dotenv from "dotenv";
 
+dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 10000;
+const port = 10000;
 
-// Middleware
 app.use(cors());
-app.use(express.json()); // JSON támogatás a POST kérésekhez
+app.use(express.json());
 
-// Főoldal tesztelésre
-app.get("/", (req, res) => {
-  res.send("Szerver fut!");
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY, // Fontos! Az API kulcsot be kell állítani a Render-en.
 });
 
-// Chat endpoint
 app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
-
     if (!message) {
-      return res.status(400).json({ error: "Üzenetet kell küldeni!" });
+      return res.status(400).json({ error: "Message is required" });
     }
 
-    res.json({ reply: `Ezt mondtad: ${message}` });
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: message }],
+    });
+
+    res.json({ response: completion.choices[0].message.content });
   } catch (error) {
-    res.status(500).json({ error: "Hiba történt a szerveren." });
+    console.error("Chat API error:", error);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
-// Szerver indítása
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 
 
