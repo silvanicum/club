@@ -1,16 +1,13 @@
 {
   "name": "club",
   "version": "1.0.0",
-  "description": "My OpenAI project",
+  "description": "My Render Deployment",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "dotenv": "^16.0.3",
-    "openai": "^4.0.0"
+    "cors": "^2.8.5"
   }
 }
-
